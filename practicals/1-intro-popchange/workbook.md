@@ -31,12 +31,12 @@ This part of the practical shows you how to use the web resource to access the P
 
 *The menus are dynamic in that they will only show you the possible comparisons based on the selections you have made so far. They will also highlight whether the comparison you have selected is meaningful (highlighted in green) or whether caution is needed (highlighted in yellow). If caution is needed, further information will be provided.*  
 
-- Select **1991** and **Age 30 to 34** as Set 1 and **1981** and **Age 30 to 34** as Set 2  
+- Select **1991** and **Age 30 - 44** as Set 1 and **1981** and **Age 30 - 44** as Set 2  
 - Click **Generate**  
 - The output will be displayed on a map on the right  
 - This is a map you can move about and zoom in/out <!-- There is also a transparency slider at the top to allow you to see the basemap -->  
 
-![Raster Calculation Visualisation output](images/output-age-30-34.png){ width=50% }
+![Raster Calculation Visualisation output](images/output-age-30-44.png){ width=60% }
 
 The results (as a GeoTIFF for use in QGIS or a JPEG for use as a small image) can be downloaded from the links on the left. 
 
@@ -69,7 +69,7 @@ Let’s start off by adding data to the map display.
 
 - Start by clicking the **Add Raster Layer** ![Add Raster Layer tool](images/add-raster.png){ height=20 } button  
 - Then choose **Browse** and navigate to My Documents   
-- Select one of the ASCII GRID files you downloaded from the PopChange site  
+- Select one of the ASCII GRID files you downloaded from the PopChange site. *Change the file type to 'All files (*.*)' if needed*  
 - Click **Open**  
 - QGIS will ask what coordinate system the files are stored in  
 - Type '27700' into the filter box and select 'OSGB 1936 / British National Grid'.  
@@ -101,7 +101,7 @@ The default symbology for a raster grid in QGIS is black to white, which is OK b
 - **Right click** on the raster layer and choose **Properties**  
 - Select **Style** (if not already selected)  
 - Change Render type from Singleband gray to **Singleband pseudocolor**  
-- Change the selected value under Load min/max values to **Min / max**  
+- Change the selected value under Load min/max values to **Min / max**  *(expand Load min/max values if needed)*  
 - Click **Load**  
 - Click **Classify**  
 - Your screen should look like the screenshot below  
@@ -155,7 +155,7 @@ So far we have been using the raster version of the data. If you prefer to work 
 **Be warned that the shape file for the whole of Great Britain is about quite large, about 45 MB so QGIS may struggle with it on older machines.**
 
 - On the PopChange website click the **Data** tab   
-- Right click on **vector_grid.zip** and choose **Save target as...**  
+- Right click on **vector-grid.zip** and choose **Save target as...**  
 - Save the file in your My Documents folder  
 - Extract the files from vector_grid.zip by right-clicking on it, choosing **Extract All...** and follow the on-screen instructions  
 
@@ -226,7 +226,7 @@ Clipping out a Local Authority
 
 We can select out data for a specific local authority or any other shape file boundary we already have. QGIS is very particular about the projection the data are in so we need to save the existing ASCII grid as a GeoTIFF (which will explicitly include the projection information). *This also applies to GeoTIFFs downloaded from the web resource - they need to be saved again with projection information before they can be clipped.*)
 
-- Using the ASCII grid which you already have open (probably 2001 Age 25 to 29)
+- Using the ASCII grid which you already have open (probably 2001 Age 25 to 29)  
 - Right click on the layer, and choose **Save As**  
 - Click **Browse** and choose a suitable file name  
 - Click **Save** and **OK**  
@@ -236,11 +236,11 @@ We can then download the data we want to use.
 
 To give your map some context, you can add a local authority boundary, or any other sort of boundary. You can download these from a range of different sources, including [Ordnance Survey Open Data](https://www.ordnancesurvey.co.uk/business-and-government/products/opendata-products.html). 
 
-- Once you have your boundary shape file, add it to QGIS and choose a suitable symbology. 
+- Once you have your boundary shape file, add it to QGIS and choose a suitable symbology  
 - Once the file is added, right click on the Local Authority layer and choose **Zoom to Layer**   
 - Your screen should look similar to the below:  
 
-![Knowsley LA overlaid on grid data](images/clip-1.png){ width=50% }
+![Knowsley LA overlaid on grid data](images/clip-1.png){ width=60% }
 
 - Select **Raster > Extraction > Clipper...**  
 - Select the input raster file you have saved above (mine was **grid1991_30_34**)  
@@ -261,7 +261,7 @@ Within QGIS we can look at the properties and histogram of the raster data. This
 - Select **Metadata**  
 - Within the **Properties** window scroll down to the **Band 1** section. It should look like this:  
 
-![Raster Metadata](images/raster-layer-properties-metadata.png){ width=40% }
+![Raster Metadata](images/raster-layer-properties-metadata.png){ width=50% }
 
 - This gives us the max, mean, min and standard deviation values.  
 - Click **Histogram**.  
@@ -269,7 +269,7 @@ Within QGIS we can look at the properties and histogram of the raster data. This
 - We can Zoom In on this - draw a box around the bottom left hand quarter of the histogram. QGIS will then zoom in on this section.  
 - Across the x-axis we can see the pixel values - in the example below we can see most of the values are at or below 2. 
 
-![Raster Histogram](images/raster-layer-properties-histogram.png){ width=40% }
+![Raster Histogram](images/raster-layer-properties-histogram.png){ width=50% }
   
     
     

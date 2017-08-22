@@ -1,3 +1,7 @@
 *.pdf
 
 practicals/2-article-ready-map/tmp
+.Rproj.user
+practicals/1-intro-popchange/images/Thumbs.db
+Thumbs.db
+.Rhistory
