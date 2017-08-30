@@ -5,3 +5,6 @@ practicals/2-article-ready-map/tmp
 practicals/1-intro-popchange/images/Thumbs.db
 Thumbs.db
 .Rhistory
+practicals/3-popchange-rstudio/5a_ascii_grid1981_Age_Age30_34.asc
+practicals/3-popchange-rstudio/5a_ascii_grid1991_Age_Age30_34.asc
+*.geojson
