@@ -1,7 +1,7 @@
 ---
 output: pdf_document
 ---
-<!-- complied with pandoc -V geometry:margin=0.8in workbook.md -s -o workbook.pdf -->
+<!-- complied within RStudio -->
 
 #Introduction to Using PopChange Data with RStudio
 
@@ -54,14 +54,14 @@ This section of the practical shows how to perform some basic analysis on the Po
 
 The flexibility of R allows you to perform much more analysis than we show in this session, but we do not have enough time to cover every combination of things you could do with R! If you want to take this further in the future, check out Clear Mapping Co's upcoming training courses in R and Spatial Analysis. 
 
-To begin with, we need to download the data from the website. I will use the 1991 and 1981 Age 30-34 years as an example, but you can use whichever data you like. 
+To begin with, we need to download the data from the website. I will use the 1991 and 1981 Age 30-44 years as an example, but you can use whichever data you like. 
 
 - On the PopChange website click the **Data** tab  
 - Click **Age**  
 - Click **1991**  
-- Right click on **5a_ascii_grid1991_Age_Age30_34.asc** and choose **Save link as...**  
+- Right click on **5a_ascii_grid1991_Age_Age30_44.asc** and choose **Save link as...**  
 - Save the file in your My Documents folder  
-- Repeat the process for **5a_ascii_grid1981_Age30_34.asc** in the 1981 folder  
+- Repeat the process for **5a_ascii_grid1981_Age30_44.asc** in the 1981 folder  
 
 <!--  
 ```{r, message=FALSE, display=FALSE, comment=NA, warning=FALSE, results='hide'}
@@ -69,8 +69,8 @@ To begin with, we need to download the data from the website. I will use the 199
 #currently automated download doesn't work thorough R
 
 #download datasets from PopChange site
-#download.file("https://popchange-data.liverpool.ac.uk/age/1981/5a_ascii_grid1991_Age_Age30_34.asc","5a_ascii_grid1991_Age_Age30_34.asc")
-#download.file("https://popchange-data.liverpool.ac.uk/age/1981/5a_ascii_grid1981_Age_Age30_34.asc","5a_ascii_grid1981_Age_Age30_34.asc")
+#download.file("https://popchange-data.liverpool.ac.uk/age/1981/5a_ascii_grid1991_Age_Age30_44.asc","5a_ascii_grid1991_Age_Age30_44.asc")
+#download.file("https://popchange-data.liverpool.ac.uk/age/1981/5a_ascii_grid1981_Age_Age30_44.asc","5a_ascii_grid1981_Age_Age30_44.asc")
 ```
 -->
 
@@ -98,18 +98,18 @@ The next step is to read in the data. As with most programs, there are many diff
 #We use it to record what we did for when we return to the 
 #code in 6 months time and have no idea what it means!
 
-#load popchange raster data in an R object called '1991Age3034'
-Age3034_1991 <- raster("5a_ascii_grid1991_Age_Age30_34.asc")
+#load popchange raster data in an R object called '1991Age3044'
+Age3044_1991 <- raster("5a_ascii_grid1991_Age_Age30_44.asc")
 ```
 
 We can simply plot the raster data:
 
 ```{r,message=FALSE,display=FALSE, warning = FALSE}
 # plot data
-plot(Age3034_1991)
+plot(Age3044_1991)
 ```
 
-*(R will sometimes struggle with large data sets using plot. If it does, try `image(Age3034_1991)` instead.)*
+*(R will sometimes struggle with large data sets using plot. If it does, try `image(Age3044_1991)` instead.)*
 
 This will give us a simple map of the data. There are various different things we can do with the data. Work through the sections below at your own pace, and feel free to skip some if you like. 
 
@@ -119,9 +119,9 @@ We can view a range of information about the raster data:
 
 ```{r, message=FALSE, display = FALSE, warning = FALSE, results = 'hide'}
 #calculate min and max values for raster
-Age3034_1991 <- setMinMax(Age3034_1991)
+Age3044_1991 <- setMinMax(Age3044_1991)
 #print out raster details
-Age3034_1991
+Age3044_1991
 ```
 
 This will tell us how many cells there are (`ncell`) as well the maximum, minimum and a whole range of other information. 
@@ -130,14 +130,14 @@ We can also view the histogram of the raster with:
 
 ```{r, warning = FALSE}
 #display basic histogram
-hist(Age3034_1991)
+hist(Age3044_1991)
 ```
 
 Note the warning message. By default, R is not used to dealing with large data sets. We can add some parameters to the `hist()` function to show all the data, and tidy up the display a bit.  
   
 ```{r, eval = FALSE, message=FALSE, display = FALSE, warning = FALSE, results = 'hide'}
 #display histogram, specifying title, colour and number of pixels
-hist(Age3034_1991, main="Distribution of Age 30-34 in 1991 values", 
+hist(Age3044_1991, main="Distribution of Age 30-44 in 1991 values", 
      col= "purple", maxpixels=800000)
 ```
 
@@ -145,7 +145,7 @@ As with many of these data sets, there are many 0 values. We can plot the histog
 
 ```{r, eval = FALSE, warning = FALSE}
 #display histogram, specifying title and colour
-hist(Age3034_1991[Age3034_1991!=0], main="Distribution of Age 30-34 in 1991 values, 
+hist(Age3044_1991[Age3044_1991!=0], main="Distribution of Age 30-44 in 1991 values, 
      without 0s",col= "purple")
 ```
 
@@ -155,14 +155,14 @@ Our basic plot is ok, but not very exciting or pretty:
 
 ```{r,message=FALSE,display=FALSE, warning = FALSE, eval=FALSE}
 # plot data
-plot(Age3034_1991)
+plot(Age3044_1991)
 ```
 
 There are various things we can do to improve this, such as removing the axes:
 
 ```{r,message=FALSE,display=FALSE, warning = FALSE, eval=FALSE}
 # plot data
-plot(Age3034_1991, axes = FALSE)
+plot(Age3044_1991, axes = FALSE)
 ```
 
 And customising the colours:
@@ -173,7 +173,7 @@ And customising the colours:
 #set colours
   my_colours <- brewer.pal(6, "Blues")
 #plot map
-  plot(Age3034_1991, col=my_colours, main="Age 30 - 34 Count in 1991", axes = FALSE)
+  plot(Age3044_1991, col=my_colours, main="Age 30 - 44 Count in 1991", axes = FALSE)
 ```
 
 ##Clipping out a Local Authority
@@ -182,12 +182,12 @@ It is probably better to show a smaller area rather than the whole of Great Brit
 
 ```{r,message=FALSE,display=FALSE, warning = FALSE, eval=FALSE}
 #plot the data
-  plot(Age3034_1991, col=my_colours, axes = FALSE)
+  plot(Age3044_1991, col=my_colours, axes = FALSE)
 #Define the extent of the crop by clicking on the plot
   cropbox1 <- drawExtent()
 #crop the raster, then plot the new cropped raster
-  Age3034_1991_crop <- crop(Age3034_1991, cropbox1)
-  plot(Age3034_1991_crop, col=my_colours, axes = FALSE)
+  Age3044_1991_crop <- crop(Age3044_1991, cropbox1)
+  plot(Age3044_1991_crop, col=my_colours, axes = FALSE)
 ```
 
 If we want to crop the data by local authority, we need the local authority boundary. You can get some boundaries from bit.ly/ClearMapBCS, or you can use your own. Then you can crop the data using this code:
@@ -198,7 +198,7 @@ If we want to crop the data by local authority, we need the local authority boun
 #clip out section required
   #see https://gis.stackexchange.com/questions/130522/increasing-speed-of-crop-mask-
   #extract-raster-by-many-polygons-in-r for info
-  clip1 <- crop(Age3034_1991, extent(la))
+  clip1 <- crop(Age3044_1991, extent(la))
   clip2 <- rasterize(la, clip1, mask=TRUE)
 #plot just the LA boundary
   plot(la)
@@ -213,13 +213,13 @@ If we want to crop the data by local authority, we need the local authority boun
 We can also do the raster calculator process in R, i.e. calculating the difference between two years. 
   
 ```{r,message=FALSE,display=FALSE, warning = FALSE, eval=FALSE}
-#load popchange raster data in an R object called '1991Age3034' and '1981Age3034'
-  Age3034_1991 <- raster("5a_ascii_grid1991_Age_Age30_34.asc")
-  Age3034_1981 <- raster("5a_ascii_grid1981_Age_Age30_34.asc")
+#load popchange raster data in an R object called '1991Age3044' and '1981Age3044'
+  Age3044_1991 <- raster("5a_ascii_grid1991_Age_Age30_44.asc")
+  Age3044_1981 <- raster("5a_ascii_grid1981_Age_Age30_44.asc")
 #do the subtraction
-  Age3034_difference <- Age3034_1991 - Age3034_1981
+  Age3044_difference <- Age3044_1991 - Age3044_1981
 #plot the map
-  plot(Age3034_difference, col=my_colours, axes = FALSE)
+  plot(Age3044_difference, col=my_colours, axes = FALSE)
 ```
 
 Try seeing if you can crop out an area from this data set. 
@@ -235,7 +235,7 @@ This practical was supplied by Clear Mapping Co.
 
 *Our bespoke GIS training courses offer the opportunity to improve efficiency handling spatial data and creating clear maps.*
 
-PopChange is funded by the Economic and Social Research Council (ESRC) under the Secondary Data Analysis Initiative (SDAI), Phase 2 (project ES/L014769/1) and this support is acknowledged gratefully. The Office for National Statistics are project partners. The research builds on the British Academy/Leverhulme Trust Small Research Grant Scheme funded project ‘Generating population surfaces for England and Wales using information on landuse and the spatial structure of population variables’ (SG121849), which ran from 2013 to 2014. The project is based with the University of Liverpool’s cross-disciplinary Centre for Spatial Demographics Research. For more information see: https://www.liverpool.ac.uk/geography-and-planning/research/popchange/introduction/
+PopChange is funded by the Economic and Social Research Council (ESRC) under the Secondary Data Analysis Initiative (SDAI), Phase 2 (project ES/L014769/1) and this support is acknowledged gratefully. The Office for National Statistics are project partners. The research builds on the British Academy/Leverhulme Trust Small Research Grant Scheme funded project 'Generating population surfaces for England and Wales using information on landuse and the spatial structure of population variables' (SG121849), which ran from 2013 to 2014. The project is based with the University of Liverpool's cross-disciplinary Centre for Spatial Demographics Research. For more information see: https://www.liverpool.ac.uk/geography-and-planning/research/popchange/introduction/
 
 This practical was written using R 3.4.0 (2017-04-21) and RStudio 1.0.143 by Nick Bearman (nick@clearmapping.co.uk). This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/deed.en.  
 

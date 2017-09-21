@@ -52,14 +52,14 @@ You also have the option of limiting the map to a Local Authority of your choice
 
 This section of the practical shows how to perform some basic analysis on the PopChange data using QGIS. The flexibility of QGIS allows you to perform much more analysis than we show in this session, but we do not have enough time to cover every combination of things you could do with QGIS! If you want to take this further in the future, you can download QGIS from www.qgis.com and install it on your own computer. 
 
-To begin with, we need to download the data from the website. I will use the 1991 and 1981 Age 30-34 years as an example, but you can use whichever data you like. 
+To begin with, we need to download the data from the website. I will use the 1991 and 1981 Age 30-44 years as an example, but you can use whichever data you like. 
 
 - On the PopChange website click the **Data** tab  
 - Click **Age**  
 - Click **1991**  
-- Right click on **5a_ascii_grid1991_Age_Age30_34.asc** and choose **Save target as...**  
+- Right click on **5a_ascii_grid1991_Age_Age30_44.asc** and choose **Save target as...**  
 - Save the file in your My Documents folder  
-- Repeat the process for **5a_ascii_grid1981_Age30_34.asc** in the 1981 folder  
+- Repeat the process for **5a_ascii_grid1981_Age30_44.asc** in the 1981 folder  
 
 Click **Start**, type **QGIS** and click on **QGIS Desktop 2.10.1**
 
@@ -157,16 +157,16 @@ So far we have been using the raster version of the data. If you prefer to work 
 - On the PopChange website click the **Data** tab   
 - Right click on **vector-grid.zip** and choose **Save target as...**  
 - Save the file in your My Documents folder  
-- Extract the files from vector_grid.zip by right-clicking on it, choosing **Extract All...** and follow the on-screen instructions  
+- Extract the files from vector-grid.zip by right-clicking on it, choosing **Extract All...** and follow the on-screen instructions  
 
 We also need the lookup table for the variable we are using
 
 - On the PopChange website click the **Data** tab  
 - Click **Age**  
 - Click **1991**  
-- Right click on **lookup_1991_Age_Age30_34.csv** and choose **Save target as...**  
+- Right click on **lookup_1991_Age_Age30_44.csv** and choose **Save target as...**  
 - Save the file in your My Documents folder  
-- Repeat the process for **lookup_1991_Age_Age30_34.csvt** and save it in the same folder  
+- Repeat the process for **lookup_1991_Age_Age30_44.csvt** and save it in the same folder  
 
 In order to join tabular data it is necessary that both of your datasets have a common attribute (e.g. a name, unique reference or code). This attribute must be unique (i.e. a code must not be listed twice in your Attribute table) and identical (i.e. the codes must be the same).
 
@@ -175,10 +175,10 @@ In order to join tabular data it is necessary that both of your datasets have a 
 - Select the **vector_grid.shp** file  
 - click **Open**  
 - click **Open**  
-- Right click on the vector_grid layer and select **Open Attribute Table**. You’ll see that the GRIDCODE field is unique for each grid cell.   
+- Right click on the vector_grid layer and select **Open Attribute Table**. *This may take a little while on older machines because of the file size.* You’ll see that the GRIDCODE field is unique for each grid cell.   
 - Close the Attribute table.  
 
-The vector lookup table is saved as a CSV file (lookup_1991_Age_Age30_34.csv). Open it in Excel if you wish to take a look. We also have a CSVT file which stores the field types (lookup_1991_Age_Age30_34.csvt) 
+The vector lookup table is saved as a CSV file (lookup_1991_Age_Age30_44.csv). Open it in Excel if you wish to take a look. We also have a CSVT file which stores the field types (lookup_1991_Age_Age30_44.csvt) 
 
 The fields we are joining are CODE from the vector grid file and grid_ID from the Lookup table. 
 
@@ -186,7 +186,7 @@ Now that we’ve identified the two fields in our datasets that we will use to m
 
 - Firstly, add the lookup table using **Add Vector Layer** ![Add Vector Layer tool](images/add-vector.png){ height=20 } button  
 - Click on this now and **Browse** to where you have saved the data files  
-- Select **lookup_1991_Age_Age30_34.csv** (if it doesn’t show, change the box next to File Name from ESRI Shapefiles to All files) and click Open, and click Open again  
+- Select **lookup_1991_Age_Age30_44.csv** (if it doesn’t show, change the box next to File Name from ESRI Shapefiles to All files) and click Open, and click Open again  
 
 The table will now appear as a layer in the Layers window:
 
@@ -198,7 +198,7 @@ Now we will join this table layer with your spatial data. Right-click on the vec
 
 Click on the plus  button to create a new join. The Add Vector Join dialogue box will now open.  
 
-- Make sure that pop_2011 is selected in the **Join layer** dropdown box  
+- Make sure that **lookup_1991_Age_Age30_44** is selected in the **Join layer** dropdown box  
 - **grid_ID** should be selected in the **Join field** dropdown box  
 - **GRIDCODE** should also be selected in the **Target field** dropdown box  
 
@@ -206,14 +206,14 @@ Click on the plus  button to create a new join. The Add Vector Join dialogue box
 
 Hit **OK** on the Add vector join window and also in the Layer Properties window
 
-Open Attribute Table of vector_grid and you will see that a new field (named lookup_1991_Age_Age30_34) has been added to the Attribute table! Please ask for help if this is not the case.
+Open Attribute Table of vector_grid and you will see that a new field (named lookup_1991_Age_Age30_44) has been added to the Attribute table! Please ask for help if this is not the case.
 
 The join that we have made is not permanent; it is a temporary link between the two datasets. To make the Join permanent we need to save a new copy of the vector_grid layer.
 
 - Right-click **vector_grid** and click on **Save as**  
 - In the Save vector layer as window make sure that the following variables are selected:  
 - **Format** is **ESRI Shapefile**  
-- Save the new layer as vector_grid_1991_age_30_34  
+- Save the new layer as vector_grid_1991_age_30_44  
 - Leave all other fields as they are  
 - Check the checkbox next to **Add saved file to map**  
 - Hit **OK** and the new layer will be added to the map  
@@ -226,7 +226,7 @@ Clipping out a Local Authority
 
 We can select out data for a specific local authority or any other shape file boundary we already have. QGIS is very particular about the projection the data are in so we need to save the existing ASCII grid as a GeoTIFF (which will explicitly include the projection information). *This also applies to GeoTIFFs downloaded from the web resource - they need to be saved again with projection information before they can be clipped.*)
 
-- Using the ASCII grid which you already have open (probably 2001 Age 25 to 29)  
+- Using the ASCII grid which you already have open (probably 2001 Age 30 to 44)  
 - Right click on the layer, and choose **Save As**  
 - Click **Browse** and choose a suitable file name  
 - Click **Save** and **OK**  
@@ -243,7 +243,7 @@ To give your map some context, you can add a local authority boundary, or any ot
 ![Knowsley LA overlaid on grid data](images/clip-1.png){ width=60% }
 
 - Select **Raster > Extraction > Clipper...**  
-- Select the input raster file you have saved above (mine was **grid1991_30_34**)  
+- Select the input raster file you have saved above (mine was **grid1991_30_44**)  
 - Set the output file by clicking on **Select..** by output file and give it a suitable name  
 - Under Clipping mode select **Mask layer**  
 - Ensure the layer selected is the vector layer you want to use for the clip  
